@@ -6,6 +6,11 @@ class Delphesk
 {
 	public function __construct()
 	{
-		return 'made!';
+		$this->sayHello();
+	}
+
+	public function sayHello()
+	{
+		return 'Hello!';
 	}
 }
