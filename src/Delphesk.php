@@ -6,11 +6,10 @@ class Delphesk
 {
 	public function __construct()
 	{
-		$this->sayHello();
 	}
 
-	public function sayHello()
+	public function isAdmin()
 	{
-		return 'Hello!';
+		return true;
 	}
 }
