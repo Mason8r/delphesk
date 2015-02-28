@@ -4,12 +4,14 @@ namespace Delphesk;
 
 class Delphesk 
 {
+
 	public function __construct()
 	{
+
 	}
 
 	public function isAdmin()
 	{
-		return true;
+		return \Auth::check();
 	}
 }

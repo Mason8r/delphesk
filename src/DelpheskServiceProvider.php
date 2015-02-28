@@ -26,7 +26,10 @@ class DelpheskServiceProvider extends ServiceProvider {
      */
     public function register()
     {
-        //
+        \App::bind('delphesk', function()
+        {
+            return new Delphesk;
+        });
     }
 
 }
