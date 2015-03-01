@@ -2,16 +2,25 @@
 
 namespace Delphesk;
 
+use Delphesk\Repository\DelpheskRepositoryInterface as Repo;
+
 class Delphesk 
 {
+	
+	public $repo;
 
-	public function __construct()
+	public function __construct(Repo $repo)
 	{
-
+		$this->repo = $repo;
 	}
 
-	public function isAdmin()
+	/**
+	* Get all of the current users tickets
+	* @param $ticket array
+	* @return array
+	*/
+	public function create($ticket)
 	{
-		return \Auth::check();
+		return $this->repo->createTicket($ticket);
 	}
 }

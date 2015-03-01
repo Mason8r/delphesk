@@ -2,7 +2,9 @@
 
 namespace Delphesk\Repository;
 
+use Illuminate\Contracts\Auth\Authenticatable;
+
 interface DelpheskRepositoryInterface
 {
-	public function checkIfCurrentUserAdmin();
+	public function createTicket($ticket);//, Authenticatable $user);
 }

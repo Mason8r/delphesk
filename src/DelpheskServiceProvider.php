@@ -3,6 +3,7 @@
 namespace Delphesk;
 
 use Illuminate\Support\ServiceProvider;
+use Delphesk\Repository\DelpheskRepository as Repo;
 
 class DelpheskServiceProvider extends ServiceProvider {
 
@@ -26,10 +27,12 @@ class DelpheskServiceProvider extends ServiceProvider {
      */
     public function register()
     {
-        \App::bind('delphesk', function()
+
+        $this->app->bind('delphesk', function()
         {
-            return new Delphesk;
+            return new Delphesk(new Repo());
         });
+
     }
 
 }
