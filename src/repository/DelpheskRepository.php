@@ -16,27 +16,40 @@ Class DelpheskRepository implements DelpheskRepositoryInterface
 	{
 		$this->currentUser = \Auth::user();
 	}
+
+	/**
+	* Find and return a single ticket and all it's children based on the ticket id
+	* @param string $id
+	* @return array
+	*/
+	public function findTicket($id)//, Authenticatable $user)
+	{
+		$ticket = Ticket::with('messages.user','user')->find($id);
+		
+		if(!$ticket) {
+			return false;
+		}
+
+		return $ticket->toArray();
+	}
+
 	/**
 	* Takes an array and creates a ticket & message, returns ID of ticket if successful
 	* @param $ticket array
-	* @return integer
+	* @return object
 	*/
 	public function createTicket($entry)//, Authenticatable $user)
 	{
 		$ticket = $this->createNewTicket($entry);
 		$message = $this->createNewMessage($entry, $ticket);
 
-		if( ! $ticket) {
-			return false;
-		}
-
-		return $ticket->id;
+		return $ticket;
 	}
 
 	/**
 	* Creates a new ticket and adds a subject. Returns Ticket object
-	* @param string $subject
-	* @return Obj Ticket
+	* @param $entry array
+	* @return object
 	*/
 	public function createNewTicket($entry)
 	{
@@ -50,10 +63,10 @@ Class DelpheskRepository implements DelpheskRepositoryInterface
 
 	/**
 	* Creates a new messsage and associates with with the passed ticket.
-	* @param string $subject, Ticket $ticket
-	* @return Obj Message
+	* @param $subject array, $ticket Collection,
+	* @return object
 	*/
-	public function createNewMessage($entry,$ticket)
+	public function createNewMessage($entry, $ticket)
 	{
 		$message = new Message;
 		$message->message = $entry['message'];
@@ -64,8 +77,4 @@ Class DelpheskRepository implements DelpheskRepositoryInterface
 		return $message;
 	}
 
-	public function getFullTicketArray(Ticket $ticket)
-	{
-		return Ticket::with('messages','user')->find($ticket->id)->toArray();
-	}
 }

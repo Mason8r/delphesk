@@ -15,9 +15,13 @@ class DelpheskServiceProvider extends ServiceProvider {
     public function boot()
     {
 
+        include __DIR__.'/routes.php';
+
         $this->publishes([
             __DIR__.'/config/config.php' => config_path('delphesk.php'),
         ]);
+
+        $this->loadViewsFrom(__DIR__.'/views', 'delphesk');
     }
 
     /**
