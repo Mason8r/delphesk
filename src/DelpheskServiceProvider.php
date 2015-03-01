@@ -21,6 +21,10 @@ class DelpheskServiceProvider extends ServiceProvider {
             __DIR__.'/config/config.php' => config_path('delphesk.php'),
         ]);
 
+        $this->publishes([
+            __DIR__.'/migrations' => base_path('/database/migrations')
+        ], 'migrations');
+
         $this->loadViewsFrom(__DIR__.'/views', 'delphesk');
     }
 

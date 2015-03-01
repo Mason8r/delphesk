@@ -1,33 +1,21 @@
 <?php
 
-Route::get('/delphesk', function() {
+Route::get('tickets', [
+    'as' => 'tickets', 'uses' => 'Delphesk\Controllers\TicketController@showAll'
+]);
 
-	return view('delphesk::all');
+Route::get('tickets/new', [
+    'as' => 'newTicket', 'uses' => 'Delphesk\Controllers\TicketController@create'
+]);
 
-});
+Route::post('tickets/new', [
+    'as' => 'storeTicket', 'uses' => 'Delphesk\Controllers\TicketController@store'
+]);
 
-Route::get('/delphesk/create', function() {
+Route::post('tickets/reply/{id}', [
+    'as' => 'replyTicket', 'uses' => 'Delphesk\Controllers\TicketController@reply'
+]);
 
-	return view('delphesk::create');
-
-});
-
-Route::post('/delphesk/create', function(Delphesk\Requests\StoreTicketRequest $request) {
-
-	$ticket = Delphesk::createAndReturn($request->all());
-
-	return redirect('/delphkesk/single/' . $ticket->id);
-
-});
-
-Route::get('/delphesk/single/{id}', function($id) {
-
-	$ticket = Delphesk::findTicket($id);
-
-	if(!$ticket) {
-		return abort(404);
-	}
-
-	return view('delphesk::single', compact('ticket'));
-
-});
+Route::get('tickets/single/{id}', [
+    'as' => 'showTicket', 'uses' => 'Delphesk\Controllers\TicketController@showTicket'
+]);

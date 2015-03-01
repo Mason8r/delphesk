@@ -25,22 +25,35 @@ class Delphesk
 	}
 
 	/**
-	* Find a ticket based on it's identification number
+	* Reply to a current ticket
 	* @param $ticket array
-	* @return array
+	* @return integer
 	*/
-	public function findTicket($ticketId)
+	public function addReply($request)
 	{
-		return $this->repo->findTicket($ticketId);
+		$ticket = $this->repo->findTicket($request['ticket_id']);
+		return $this->repo->createNewMessage($request, $ticket);
 	}
 
 	/**
-	* Get all tickets for current user (or ALL if user is ticket admin)
+	* Find a ticket based on it's identification number, return arry
+	* @param $ticket array
+	* @return array
+	*/
+	public function findTicketArray($ticketId)
+	{
+		return $this->repo->findTicketArray($ticketId);
+	}
+
+	/**
+	* If admin, then return ALL tickets, else 
 	* @param void
 	* @return array
 	*/
 	public function allTickets()
 	{
-		dd(config('delphesk.table'));
+		return $this->repo->allTickets();
 	}
+
+
 }

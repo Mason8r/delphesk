@@ -12,7 +12,7 @@
 				@endforeach
 				</ul>
 			@endif
-			<form action="{{url('/delphesk/create')}}" method="POST">
+			<form action="{{route('storeTicket')}}" method="POST">
 				<input type="text" name="subject" placeholder="subject" />
 				<textarea name="message" placeholder="ticket message"></textarea>
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
