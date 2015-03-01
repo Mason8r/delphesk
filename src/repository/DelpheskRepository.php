@@ -17,17 +17,20 @@ Class DelpheskRepository implements DelpheskRepositoryInterface
 		$this->currentUser = \Auth::user();
 	}
 	/**
-	* Takes an array and creates a ticket & message
+	* Takes an array and creates a ticket & message, returns ID of ticket if successful
 	* @param $ticket array
-	* @return array
+	* @return integer
 	*/
 	public function createTicket($entry)//, Authenticatable $user)
 	{
-		$ticket = $this->createANewTicketAndAddSubjectAssociateItWithCurrentUser($entry);
+		$ticket = $this->createNewTicket($entry);
+		$message = $this->createNewMessage($entry, $ticket);
 
-		$message = $this->createANewMessageAndAssociateItWithTicketAndCurrentUser($entry, $ticket);
+		if( ! $ticket) {
+			return false;
+		}
 
-		return $ticket->toArray();
+		return $ticket->id;
 	}
 
 	/**
@@ -35,14 +38,11 @@ Class DelpheskRepository implements DelpheskRepositoryInterface
 	* @param string $subject
 	* @return Obj Ticket
 	*/
-	public function createANewTicketAndAddSubjectAssociateItWithCurrentUser($entry)
+	public function createNewTicket($entry)
 	{
 		$ticket = new Ticket();
-
 		$ticket->subject = $entry['subject'];
-
 		$ticket->user()->associate($this->currentUser);
-
 		$ticket->save();
 
 		return $ticket;
@@ -53,18 +53,19 @@ Class DelpheskRepository implements DelpheskRepositoryInterface
 	* @param string $subject, Ticket $ticket
 	* @return Obj Message
 	*/
-	public function createANewMessageAndAssociateItWithTicketAndCurrentUser($entry,$ticket)
+	public function createNewMessage($entry,$ticket)
 	{
 		$message = new Message;
-
 		$message->message = $entry['message'];
-
 		$message->ticket()->associate($ticket);
-
 		$message->user()->associate($this->currentUser);
-	
 		$message->save();
 
 		return $message;
+	}
+
+	public function getFullTicketArray(Ticket $ticket)
+	{
+		return Ticket::with('messages','user')->find($ticket->id)->toArray();
 	}
 }
