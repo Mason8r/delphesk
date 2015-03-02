@@ -24,7 +24,7 @@ Class DelpheskRepository implements DelpheskRepositoryInterface
 	*/
 	public function allTickets()
 	{
-		return Ticket::all();
+		return Ticket::orderBy('created_at', 'desc')->paginate(3);
 	}
 
 	/**
