@@ -4,6 +4,10 @@ namespace Delphesk;
 
 use Delphesk\Repository\DelpheskRepositoryInterface as Repo;
 
+/**
+* The Main Delphesk class
+* Create, edit and save new tickets
+*/
 class Delphesk 
 {
 	
