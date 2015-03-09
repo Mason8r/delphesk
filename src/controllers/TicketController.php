@@ -47,7 +47,7 @@ class TicketController extends Controller {
 	 */
 	public function showTicket($id)
 	{
-		$ticket = \Delphesk::findTicketArray($id);
+		$ticket = \Delphesk::findTicket($id);
 
 		return view('delphesk::single', compact('ticket'));
 	}

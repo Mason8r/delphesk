@@ -4,16 +4,21 @@
 <div class="content">
 	<div class="row">
 		<div class="large-10 large-offset-1 columns">
-			<h3>{{$ticket['subject']}}</h3>
-			@foreach($ticket['messages'] as $message)
+			<h3><strong>Subject:</strong> {{$ticket->subject}}</h3>
+			@foreach($ticket->messages as $index => $message)
 
-			@if($message === reset($ticket['messages']))
-				<p>Created by {{$message['user']['email']}} on {{date('l jS \of F Y \a\t h:i:s A', strtotime($message['created_at']))}}</p>
-				<h4>{{$message['message']}}</h4>
-			@else
+			@if($index === 0)
+
+				<p>Created by {{$message->user->email}} {{$message->created_at->diffForHumans()}}</p>
+				<p><strong>Ticket Body:</strong> {{$message->message}}</p>
 				<hr />
-				<p><small>Replied to on the {{date('l jS \of F Y \a\t h:i:s A', strtotime($message['created_at']))}} by {{$message['user']['email']}}</small></p>
-				{{$message['message']}}</p>
+
+			@else
+
+				<p><small>Replied to {{$message->created_at->diffForHumans()}} by {{$message->user->email}}</small></p>
+				<p><strong>Reply:</strong> {{$message->message}}</p>
+				<hr />
+
 			@endif
 			@endforeach
 			<div class="panel">

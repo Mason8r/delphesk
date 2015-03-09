@@ -44,9 +44,9 @@ class Delphesk
 	* @param $ticket array
 	* @return array
 	*/
-	public function findTicketArray($ticketId)
+	public function findTicket($ticketId)
 	{
-		return $this->repo->findTicketArray($ticketId);
+		return $this->repo->findTicket($ticketId);
 	}
 
 	/**

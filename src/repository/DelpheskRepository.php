@@ -5,8 +5,6 @@ namespace Delphesk\Repository;
 use Delphesk\Models\Ticket;
 use Delphesk\Models\Message;
 
-use Illuminate\Contracts\Auth\Authenticatable;
-
 Class DelpheskRepository implements DelpheskRepositoryInterface
 {
 
@@ -35,22 +33,6 @@ Class DelpheskRepository implements DelpheskRepositoryInterface
 	public function allUsersTickets($user)
 	{
 		
-	}
-
-	/**
-	* Find and return a single ticket and all it's children based on the ticket id
-	* @param string $id
-	* @return array
-	*/
-	public function findTicketArray($id)
-	{
-		$ticket = Ticket::with('messages.user','user')->find($id);
-		
-		if(!$ticket) {
-			return false;
-		}
-
-		return $ticket->toArray();
 	}
 
 	/**
